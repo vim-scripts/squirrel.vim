@@ -1,140 +1,68 @@
+"------------------------------------------------------------------------------
 " Vim syntax file
-" Language:	Squirrel
-" Maintainer:	YASUHIRO.Kanda <y-kanda@r6.dion.ne.jp>
-" Last Change:	2009/02/07
+" Language: Squirrel (squirrel-lang.org)
+" Maintainer: YASUHIRO.Kanda <yasuhiro.kanda@gmail.com>
+" Last Change: 08-Mar-2010.
+" Filenames: *.nut
+" Version: 0.2
+"------------------------------------------------------------------------------
+" how to install
+"
+"  1. make folder
+"     %VIMHOME%/after/syntax
+"
+"  2. copy "squrrel.vim" to
+"     %VIMHOME%/after/syntax
+"
+"  3. in .vimrc
+"     au BufNewFile,BufRead *.nut setf squirrel
+"------------------------------------------------------------------------------
 
+syn case match
+syn keyword sqStatement		clone delegate resume return this parent constructor
+syn keyword sqStatement		vargc vargv yield class extends
+syn keyword sqConditional	else if switch case default
+syn keyword sqExeption		try catch throw
+syn keyword sqRepeat		for while continue break
+syn keyword sqOperator		in delete typeof instanceof
+syn keyword sqFunction		function
+syn keyword sqStorageClass	local static
+syn keyword sqConstant		null
+syn keyword sqBoolean		true false
 
-" | keywords
-" ----------------------------------------------------------------------------
-" break, case, catch, class, clone, continue, default, delegate, delete, else,
-" extends, for, function, if, in, local, null, resume, return, switch, this,
-" throw, try, typeof, while, parent, yield, constructor, vargc, vargv, static,
-" instanceof, true, false, 
-" 
-" 
-" | operators
-" ----------------------------------------------------------------------------
-" !, !=, ||, ==, &&, <=, =>, >, +, +=, -, -=, /, /=, *, *=, %, %=,  ++, --, <-,
-" =, &, ^, |, ~, >>, <<, >>>
-" 
-" 
-" | other tokens
-" ----------------------------------------------------------------------------
-" {, }, [, ], ., :, ::, ', ;, ", @",
-" 
-" 
-" | literals
-" ----------------------------------------------------------------------------
-" 34 									Integer	
-" 0xFF00A120 							Integer
-" 'a' 									Integer 
-" 1.52 									Float
-" 1.e2 									Float
-" 1.e-2 								Float
-" "I'm a string"					 	String
-" @"I'm a verbatim string" 				String
-" @"I'm a multiline verbatim string" 	String
+" Comments
+syn region sqCommentL start="\/\/" skip="\\$" end="$" keepend
+syn region sqComment  start=+/\*+ end=+\*/+
 
+" Strings
+syn region sqString start=+"+ skip=+\\"+ end=+"+
+syn region sqString start=+@"+ skip=+\\"+ end=+"+
 
-syntax case match
-syntax keyword sqStatement		clone
-syntax keyword sqStatement		delegate
-syntax keyword sqStatement		resume
-syntax keyword sqStatement		return
-syntax keyword sqStatement		this
-syntax keyword sqStatement		parent
-syntax keyword sqStatement		constructor
-syntax keyword sqStatement		vargc
-syntax keyword sqStatement		vargv
-syntax keyword sqStatement		yield 
-syntax keyword sqStatement		sqConditional
-syntax keyword sqStatement		else
-syntax keyword sqStatement		if
-syntax keyword sqStatement		switch 
-syntax keyword sqStatement		sqExeption
-syntax keyword sqStatement		catch
-syntax keyword sqStatement		throw
-syntax keyword sqStatement		try 
-syntax keyword sqLabel			default
-syntax keyword sqLabel			case
-syntax keyword sqRepeat			for
-syntax keyword sqRepeat			while 
-syntax keyword sqRepeat			continue
-syntax keyword sqRepeat			break
-syntax keyword sqRepeat			in
-syntax keyword sqStructure		class
-syntax keyword sqStructure		extends
-syntax keyword sqOperator		delete
-syntax keyword sqOperator		typeof
-syntax keyword sqOperator		instanceof 
-syntax keyword sqOperator		"!"
-syntax keyword sqOperator		"!="
-syntax keyword sqOperator		"||"
-syntax keyword sqOperator		"=="
-syntax keyword sqOperator		"&&"
-syntax keyword sqOperator		"<="
-syntax keyword sqOperator		"=>"
-syntax keyword sqOperator		">"
-syntax keyword sqOperator		"+"
-syntax keyword sqOperator		"+="
-syntax keyword sqOperator		"-"
-syntax keyword sqOperator		"-="
-syntax keyword sqOperator		"/"
-syntax keyword sqOperator		"/="
-syntax keyword sqOperator		"*"
-syntax keyword sqOperator		"*="
-syntax keyword sqOperator		"%"
-syntax keyword sqOperator		"%="
-syntax keyword sqOperator		"++"
-syntax keyword sqOperator		"--"
-syntax keyword sqOperator		"<-"
-syntax keyword sqOperator		"="
-syntax keyword sqOperator		"&"
-syntax keyword sqOperator		"^"
-syntax keyword sqOperator		"|"
-syntax keyword sqOperator		"~"
-syntax keyword sqOperator		">>"
-syntax keyword sqOperator		"<<"
-syntax keyword sqOperator		">>>"
-syntax keyword sqFunction		function
-syntax keyword sqStorageClass	local
-syntax keyword sqStorageClass	static
-syntax keyword sqConstant		null
-syntax keyword sqBoolean		true
-syntax keyword sqBoolean		false
-syntax region  sqComment		start=+/\*+ end=+\*/+
-syntax region  sqComment		start="//" skip="\\$" end="$" keepend
-syntax region  sqString			start=+"+ skip=+\\"+ end=+"+
-syntax region  sqString			start=+@"+ skip=+\\"+ end=+"+
-syntax region  sqCharacter		start=+'+ end=+'+
-syntax match   sqFloat			+\d*\.\d*+
-syntax match   sqFloat			+\d*\.\d*e\d*+
-syntax match   sqFloat			+\d*\.\d*e-\d*+
-syntax match   sqNumber			+[1-9]\d*+
-syntax match   sqNumber			+[0x]\d*+
-syntax match   sqNumber			+[0]\d*+
+" Numbers (decimal, octadecimal, hexadecimal, floating point number)
+syn match sqNumberD "\<[1-9]\=\d\+\>" display 
+syn match sqNumberH "\<0[xX]\x\+\>" display
+syn match sqNumberO "\<0\o\>" display
+syn match sqFloat "\<\d[\.][e\|E]\=[\-]\=\d\+\>" display
 
-
-:highlight link sqStatement     Statement
-:highlight link sqConditional   Conditional
-:highlight link sqException     Exception
-:highlight link sqLabel         Label
-:highlight link sqRepeat        Repeat
-:highlight link sqStatement     Structure
-:highlight link sqOperator      Operator
-:highlight link sqFunction      Function
-:highlight link sqStorageClass  StorageClass
-:highlight link sqConstant      Constant
-:highlight link sqBoolean       Boolean
-:highlight link sqComment       Comment
-:highlight link sqString        String
-:highlight link sqCharacter     Character
-:highlight link sqFloat         Float
-:highlight link sqNumber        Number
-
+hi def link sqStatement     Statement
+hi def link sqConditional   Conditional
+hi def link sqException     Exception
+hi def link sqLabel         Label
+hi def link sqRepeat        Repeat
+hi def link sqOperator      Operator
+hi def link sqFunction      Function
+hi def link sqStorageClass  StorageClass
+hi def link sqConstant      Constant
+hi def link sqBoolean       Boolean
+hi def link sqComment       Comment
+hi def link sqCommentL		Comment
+hi def link sqString        String
+hi def link sqCharacter     Character
+hi def link sqFloat         Float
+hi def link sqNumberD		Number
+hi def link sqNumberO		Number
+hi def link sqNumberH		Number
+hi def link sqKeyword		Keyword
 
 syn sync maxlines=50
-
-
-" Ç±ÇÍÇfiletype.vim Ç…èëÇ≠Ç±Ç∆
-" au BufNewFile, BufRead *.nut setf squirrel
+let b:current_syntax = "squirrel"
